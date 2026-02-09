@@ -131,9 +131,9 @@ The MCP Server must expose the following tools to the AI. Generic file system to
         *   `type`: Class name (e.g., "RectangleShape2D", "StandardMaterial3D").
         *   `path`: Output path (`res://...`).
 *   **`godot_set_project_setting`**
-    *   *Description*: Modifies `project.godot` settings.
+    *   *Description*: Modifies `project.godot` settings. Use this to add Autoloads (Setting: `autoload/Name`, Value: `*res://Path.tscn`).
     *   *Params*:
-        *   `name`: Setting path (e.g., "display/window/size/viewport_width").
+        *   `name`: Setting path.
         *   `value`: Value.
 *   **`godot_input_map_add`**
     *   *Description*: Adds an Input Action and assigns a key/button.
@@ -145,6 +145,11 @@ The MCP Server must expose the following tools to the AI. Generic file system to
     *   *Params*:
         *   `source`: `res://...`
         *   `destination`: `res://...`
+*   **`godot_reimport`**
+    *   *Description*: Triggers a reimport of a file, optionally with parameters.
+    *   *Params*:
+        *   `path`: File to reimport (`res://icon.png`).
+        *   `options`: Dictionary of import options (e.g., `{ "importer": "texture", "compress/mode": 0 }`).
 
 ### F. Debugging & Testing (DAP Channel)
 *   **`godot_debug_break`**: Pause execution.
@@ -221,16 +226,6 @@ When implementing `godot_get_scene_tree`, return this structure:
 }
 ```
 
-**C# Implementation Tip:**
-```csharp
-public class NodeDto {
-    public string Name { get; set; }
-    public string Class { get; set; }
-    public string Path { get; set; }
-    public List<NodeDto> Children { get; set; }
-}
-```
-
 ### 6.3 Input Simulation via DAP
 To implement `godot_send_input`, the Server should send a DAP `evaluate` request. The expression string must be valid C# or GDScript running in the game.
 
@@ -238,10 +233,3 @@ To implement `godot_send_input`, the Server should send a DAP `evaluate` request
 ```csharp
 Input.ParseInputEvent(new InputEventKey { Keycode = Key.Space, Pressed = true });
 ```
-*Note: You may need to fully qualify types (e.g., `Godot.Input.ParseInputEvent`) depending on the context.*
-
-### 6.4 Handling "res://" in Properties
-When `godot_set_property` receives a string value like `"res://icon.svg"`, the Plugin must:
-1.  Detect the prefix.
-2.  Call `GD.Load(value)`.
-3.  Set the property to the *loaded Resource object*, not the string.

@@ -33,7 +33,7 @@
     - [ ] Handle `initialize`, `attach`, `configurationDone`.
     - [ ] Listen for `output` events (stdout/stderr).
 - [ ] **Server**: Expose runtime errors to the MCP Context.
-- [ ] **Server**: Implement `godot_simulate_input` via DAP Evaluation.
+- [ ] **Server**: Implement `godot_send_input` via DAP Evaluation.
 
 ## Phase 5: Edit Capabilities
 - [ ] **Plugin**: Implement `NodeManipulator`.
@@ -54,6 +54,7 @@
     - [ ] `SetProjectSetting(name, value)`.
     - [ ] `AddInputAction(action, key)`.
     - [ ] `MoveFile(src, dst)`.
+    - [ ] `Reimport(path, options)`.
 - [ ] **Server**: Implement MCP Tools for Editor State and Asset Management.
 
 ## Phase 7: Polish
