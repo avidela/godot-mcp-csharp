@@ -49,13 +49,15 @@
 - [ ] **Plugin**: Implement `EditorHandler`.
     - [ ] `OpenScene(path)`.
     - [ ] `SaveScene()`.
+    - [ ] `TakeScreenshot(path, target)`.
 - [ ] **Plugin**: Implement `AssetManager`.
     - [ ] `CreateResource(type, path)`.
     - [ ] `SetProjectSetting(name, value)`.
     - [ ] `AddInputAction(action, key)`.
     - [ ] `MoveFile(src, dst)`.
+    - [ ] `RemoveFile(path)`.
     - [ ] `Reimport(path, options)`.
-- [ ] **Server**: Implement MCP Tools for Editor State and Asset Management.
+- [ ] **Server**: Implement MCP Tools for Editor State, Asset Management, and Screenshots.
 
 ## Phase 7: Polish
 - [ ] Add `godot_build` tool.

@@ -145,6 +145,10 @@ The MCP Server must expose the following tools to the AI. Generic file system to
     *   *Params*:
         *   `source`: `res://...`
         *   `destination`: `res://...`
+*   **`godot_filesystem_remove`**
+    *   *Description*: Removes a file via EditorFileSystem (updates cache).
+    *   *Params*:
+        *   `path`: `res://...`
 *   **`godot_reimport`**
     *   *Description*: Triggers a reimport of a file, optionally with parameters.
     *   *Params*:
@@ -167,6 +171,11 @@ The MCP Server must expose the following tools to the AI. Generic file system to
             *   For "joy_button": `{ "index": 0, "pressed": true }`
             *   For "mouse_button": `{ "button_index": 1, "pressed": true, "position": "100,100" }`
     *   *Implementation*: Uses DAP `evaluate` request to call `Input.ParseInputEvent`.
+*   **`godot_screenshot`**
+    *   *Description*: Captures the viewport (Game or Editor) and saves it to a file.
+    *   *Params*:
+        *   `path`: Output path (e.g., `user://shot.png` or an absolute path).
+        *   `target`: "game" (active viewport) or "editor" (editor interface).
 
 ## 5. Implementation Requirements
 
@@ -233,3 +242,10 @@ To implement `godot_send_input`, the Server should send a DAP `evaluate` request
 ```csharp
 Input.ParseInputEvent(new InputEventKey { Keycode = Key.Space, Pressed = true });
 ```
+*Note: You may need to fully qualify types (e.g., `Godot.Input.ParseInputEvent`) depending on the context.*
+
+### 6.4 Handling "res://" in Properties
+When `godot_set_property` receives a string value like `"res://icon.svg"`, the Plugin must:
+1.  Detect the prefix.
+2.  Call `GD.Load(value)`.
+3.  Set the property to the *loaded Resource object*, not the string.
