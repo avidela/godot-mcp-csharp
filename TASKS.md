@@ -33,6 +33,7 @@
     - [ ] Handle `initialize`, `attach`, `configurationDone`.
     - [ ] Listen for `output` events (stdout/stderr).
 - [ ] **Server**: Expose runtime errors to the MCP Context.
+- [ ] **Server**: Implement `godot_simulate_input` via DAP Evaluation.
 
 ## Phase 5: Edit Capabilities
 - [ ] **Plugin**: Implement `NodeManipulator`.

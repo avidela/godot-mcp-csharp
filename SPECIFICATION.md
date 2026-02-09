@@ -25,7 +25,7 @@ The system relies on two distinct communication channels between the **MCP Serve
 *   **Endpoint**: `tcp://127.0.0.1:6006` (Default Godot Debug Port).
 *   **Server**: Godot Engine (listens when game is running).
 *   **Client**: MCP Server (connects).
-*   **Purpose**: Capturing `stdout`/`stderr` (errors), setting breakpoints, stepping, pausing execution.
+*   **Purpose**: Capturing `stdout`/`stderr` (errors), setting breakpoints, stepping, pausing execution, and **injecting input**.
 
 ## 3. Directory Structure
 The solution `GodotMcp.sln` must contain:
@@ -146,12 +146,18 @@ The MCP Server must expose the following tools to the AI. Generic file system to
         *   `source`: `res://...`
         *   `destination`: `res://...`
 
-### F. Debugging (DAP Channel)
+### F. Debugging & Testing (DAP Channel)
 *   **`godot_debug_break`**: Pause execution.
 *   **`godot_debug_continue`**: Resume execution.
 *   **`godot_debug_step`**: Step over.
 *   **`godot_set_breakpoint`**: Set breakpoint at file/line.
 *   **`godot_get_stack_trace`**: Get current stack trace.
+*   **`godot_simulate_input`**
+    *   *Description*: Simulates an input action in the **running** game.
+    *   *Params*:
+        *   `action`: Action name (e.g., "jump").
+        *   `pressed`: boolean (true for press, false for release).
+    *   *Implementation*: Uses DAP `evaluate` request to call `Input.ActionPress/Release` in the game process.
 
 ## 5. Implementation Requirements
 
