@@ -89,6 +89,12 @@ The MCP Server must expose the following tools to the AI. Generic file system to
         *   `parent_path`: Path to parent.
         *   `type`: Class name (e.g., "Sprite2D").
         *   `name`: Desired name.
+*   **`godot_instantiate_scene`**
+    *   *Description*: Instantiates a `.tscn` file as a child of a node.
+    *   *Params*:
+        *   `parent_path`: Path to parent node.
+        *   `scene_path`: Path to the scene file (`res://...`).
+        *   `name`: Desired name (optional).
 *   **`godot_set_property`**
     *   *Description*: Sets a property on a node.
     *   *Params*:
@@ -110,7 +116,15 @@ The MCP Server must expose the following tools to the AI. Generic file system to
         *   `target_path`: Path to the node receiving the signal.
         *   `method`: Name of the function to call.
 
-### D. Asset & Project Management
+### D. Editor State Management
+*   **`godot_open_scene`**
+    *   *Description*: Opens a scene in the Editor (changes the active tab).
+    *   *Params*:
+        *   `path`: Path to the scene (`res://...`).
+*   **`godot_save_scene`**
+    *   *Description*: Saves the currently open scene.
+
+### E. Asset & Project Management
 *   **`godot_create_resource`**
     *   *Description*: Creates a new Resource file (e.g., Shape, Material, TileSet).
     *   *Params*:
@@ -132,7 +146,7 @@ The MCP Server must expose the following tools to the AI. Generic file system to
         *   `source`: `res://...`
         *   `destination`: `res://...`
 
-### E. Debugging (DAP Channel)
+### F. Debugging (DAP Channel)
 *   **`godot_debug_break`**: Pause execution.
 *   **`godot_debug_continue`**: Resume execution.
 *   **`godot_debug_step`**: Step over.

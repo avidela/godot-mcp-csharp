@@ -37,18 +37,23 @@
 ## Phase 5: Edit Capabilities
 - [ ] **Plugin**: Implement `NodeManipulator`.
     - [ ] `AddNode(parent, type, name)`.
+    - [ ] `InstantiateScene(parent, scene_path)`.
     - [ ] `SetProperty(node, prop, value)` (Handle `res://` strings!).
     - [ ] `CallMethod(node, method, args)` (Handle TileMaps/AnimationPlayers).
     - [ ] `ConnectSignal(source, signal, target, method)`.
-- [ ] **Server**: Implement MCP Tools `godot_add_node`, `godot_set_property`, `godot_call_node_method`, `godot_connect_signal`.
+- [ ] **Server**: Implement MCP Tools `godot_add_node`, `godot_instantiate_scene`.
+- [ ] **Server**: Implement MCP Tools `godot_set_property`, `godot_call_node_method`, `godot_connect_signal`.
 
-## Phase 6: Asset & Project Management
+## Phase 6: Editor State & Assets
+- [ ] **Plugin**: Implement `EditorHandler`.
+    - [ ] `OpenScene(path)`.
+    - [ ] `SaveScene()`.
 - [ ] **Plugin**: Implement `AssetManager`.
     - [ ] `CreateResource(type, path)`.
     - [ ] `SetProjectSetting(name, value)`.
     - [ ] `AddInputAction(action, key)`.
     - [ ] `MoveFile(src, dst)`.
-- [ ] **Server**: Implement MCP Tools for Resource/Project management.
+- [ ] **Server**: Implement MCP Tools for Editor State and Asset Management.
 
 ## Phase 7: Polish
 - [ ] Add `godot_build` tool.
