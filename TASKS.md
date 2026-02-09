@@ -39,9 +39,17 @@
     - [ ] `AddNode(parent, type, name)`.
     - [ ] `SetProperty(node, prop, value)` (Handle `res://` strings!).
     - [ ] `CallMethod(node, method, args)` (Handle TileMaps/AnimationPlayers).
-- [ ] **Server**: Implement MCP Tools `godot_add_node` and `godot_set_property`.
-- [ ] **Server**: Implement MCP Tool `godot_call_node_method`.
+    - [ ] `ConnectSignal(source, signal, target, method)`.
+- [ ] **Server**: Implement MCP Tools `godot_add_node`, `godot_set_property`, `godot_call_node_method`, `godot_connect_signal`.
 
-## Phase 6: Polish
+## Phase 6: Asset & Project Management
+- [ ] **Plugin**: Implement `AssetManager`.
+    - [ ] `CreateResource(type, path)`.
+    - [ ] `SetProjectSetting(name, value)`.
+    - [ ] `AddInputAction(action, key)`.
+    - [ ] `MoveFile(src, dst)`.
+- [ ] **Server**: Implement MCP Tools for Resource/Project management.
+
+## Phase 7: Polish
 - [ ] Add `godot_build` tool.
 - [ ] Verify thread safety (no crashes on `CallDeferred`).

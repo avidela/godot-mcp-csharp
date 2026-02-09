@@ -102,8 +102,37 @@ The MCP Server must expose the following tools to the AI. Generic file system to
         *   `path`: Node path.
         *   `method`: Method name (e.g., "set_cell").
         *   `args`: Array of arguments.
+*   **`godot_connect_signal`**
+    *   *Description*: Connects a signal to a target script method.
+    *   *Params*:
+        *   `source_path`: Path to the node emitting the signal.
+        *   `signal`: Name of the signal (e.g., "pressed", "body_entered").
+        *   `target_path`: Path to the node receiving the signal.
+        *   `method`: Name of the function to call.
 
-### D. Debugging (DAP Channel)
+### D. Asset & Project Management
+*   **`godot_create_resource`**
+    *   *Description*: Creates a new Resource file (e.g., Shape, Material, TileSet).
+    *   *Params*:
+        *   `type`: Class name (e.g., "RectangleShape2D", "StandardMaterial3D").
+        *   `path`: Output path (`res://...`).
+*   **`godot_set_project_setting`**
+    *   *Description*: Modifies `project.godot` settings.
+    *   *Params*:
+        *   `name`: Setting path (e.g., "display/window/size/viewport_width").
+        *   `value`: Value.
+*   **`godot_input_map_add`**
+    *   *Description*: Adds an Input Action and assigns a key/button.
+    *   *Params*:
+        *   `action`: Action name (e.g., "jump").
+        *   `key`: Key string (e.g., "Space", "A").
+*   **`godot_filesystem_move`**
+    *   *Description*: Moves/Renames a file using Godot's system (updates dependencies).
+    *   *Params*:
+        *   `source`: `res://...`
+        *   `destination`: `res://...`
+
+### E. Debugging (DAP Channel)
 *   **`godot_debug_break`**: Pause execution.
 *   **`godot_debug_continue`**: Resume execution.
 *   **`godot_debug_step`**: Step over.
