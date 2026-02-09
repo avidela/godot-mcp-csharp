@@ -180,3 +180,68 @@ The MCP Server must expose the following tools to the AI. Generic file system to
 
 ### 5.3 Build System
 *   The `EditorPlugin` project must include a `<Target Name="CopyPlugin" AfterTargets="Build">` to copy the DLL and `plugin.cfg` to the `addons/godot_mcp_csharp` folder automatically.
+
+## 6. Implementation Reference (Technical Appendix)
+
+### 6.1 Threading & Awaiting the Main Thread
+Godot API calls MUST run on the main thread. Since WebSocket messages arrive on a background thread, use this pattern to execute logic and return values safely:
+
+```csharp
+public async Task<T> ExecuteOnMainThread<T>(Func<T> action)
+{
+    var tcs = new TaskCompletionSource<T>();
+    
+    // Defer the execution to the main thread
+    Godot.Callable.From(() =>
+    {
+        try
+        {
+            var result = action();
+            tcs.SetResult(result);
+        }
+        catch (Exception ex)
+        {
+            tcs.SetException(ex);
+        }
+    }).CallDeferred();
+
+    return await tcs.Task;
+}
+```
+
+### 6.2 Scene Tree DTO Schema
+When implementing `godot_get_scene_tree`, return this structure:
+
+```json
+{
+  "name": "Player",
+  "class": "CharacterBody2D",
+  "path": "/root/Main/Player",
+  "children": [ ... ]
+}
+```
+
+**C# Implementation Tip:**
+```csharp
+public class NodeDto {
+    public string Name { get; set; }
+    public string Class { get; set; }
+    public string Path { get; set; }
+    public List<NodeDto> Children { get; set; }
+}
+```
+
+### 6.3 Input Simulation via DAP
+To implement `godot_send_input`, the Server should send a DAP `evaluate` request. The expression string must be valid C# or GDScript running in the game.
+
+**Example C# Expression to send:**
+```csharp
+Input.ParseInputEvent(new InputEventKey { Keycode = Key.Space, Pressed = true });
+```
+*Note: You may need to fully qualify types (e.g., `Godot.Input.ParseInputEvent`) depending on the context.*
+
+### 6.4 Handling "res://" in Properties
+When `godot_set_property` receives a string value like `"res://icon.svg"`, the Plugin must:
+1.  Detect the prefix.
+2.  Call `GD.Load(value)`.
+3.  Set the property to the *loaded Resource object*, not the string.
