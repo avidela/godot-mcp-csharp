@@ -1,0 +1,44 @@
+# Implementation Tasks
+
+## Phase 0: Project Scaffolding
+- [ ] Create `GodotMcp.sln` solution.
+- [ ] Create `src/GodotMcp.Server` (Console App).
+- [ ] Create `src/GodotMcp.EditorPlugin` (Class Library).
+- [ ] Add `addons/godot_mcp_csharp/plugin.cfg`.
+- [ ] Configure `.csproj` files (references, output paths).
+
+## Phase 1: The Control Bridge (WebSocket)
+- [ ] **Plugin**: Implement `WebSocketListener` in `GodotMcp.EditorPlugin`.
+    - [ ] Handle connections on port 6009.
+    - [ ] Implement basic JSON-RPC parsing.
+- [ ] **Server**: Implement `WebSocketClient` in `GodotMcp.Server`.
+    - [ ] Auto-connect loop (retry if Godot is closed).
+- [ ] **Verify**: Send a "ping" from Server to Plugin and get "pong".
+
+## Phase 2: Read Capabilities
+- [ ] **Plugin**: Implement `SceneTraverser`.
+    - [ ] Map `EditorInterface.GetEditedSceneRoot()` to a JSON DTO.
+- [ ] **Server**: Implement MCP Tools `godot_get_scene_tree`.
+- [ ] **Server**: Implement MCP Tools `godot_get_status`.
+
+## Phase 3: Control Capabilities
+- [ ] **Plugin**: Implement `PlayHandler`.
+    - [ ] `EditorInterface.PlayMainScene()`.
+    - [ ] `EditorInterface.StopPlayingScene()`.
+- [ ] **Server**: Implement MCP Tools `godot_play` and `godot_stop`.
+
+## Phase 4: The Debug Bridge (DAP)
+- [ ] **Server**: Implement `DapClient` (TCP to port 6006).
+    - [ ] Handle `initialize`, `attach`, `configurationDone`.
+    - [ ] Listen for `output` events (stdout/stderr).
+- [ ] **Server**: Expose runtime errors to the MCP Context.
+
+## Phase 5: Edit Capabilities
+- [ ] **Plugin**: Implement `NodeManipulator`.
+    - [ ] `AddNode(parent, type, name)`.
+    - [ ] `SetProperty(node, prop, value)`.
+- [ ] **Server**: Implement MCP Tools `godot_add_node` and `godot_set_property`.
+
+## Phase 6: Polish
+- [ ] Add `godot_build` tool.
+- [ ] Verify thread safety (no crashes on `CallDeferred`).

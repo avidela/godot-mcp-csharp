@@ -1,0 +1,17 @@
+# Godot
+.godot/
+.import/
+export_presets.cfg
+
+# C# / .NET
+bin/
+obj/
+.vs/
+*.csproj.user
+*.sln.docstates
+*.user
+*.suo
+
+# OS
+.DS_Store
+Thumbs.db
