@@ -152,12 +152,16 @@ The MCP Server must expose the following tools to the AI. Generic file system to
 *   **`godot_debug_step`**: Step over.
 *   **`godot_set_breakpoint`**: Set breakpoint at file/line.
 *   **`godot_get_stack_trace`**: Get current stack trace.
-*   **`godot_simulate_input`**
-    *   *Description*: Simulates an input action in the **running** game.
+*   **`godot_send_input`**
+    *   *Description*: Simulates input in the running game. Can send High-Level Actions OR Low-Level Events.
     *   *Params*:
-        *   `action`: Action name (e.g., "jump").
-        *   `pressed`: boolean (true for press, false for release).
-    *   *Implementation*: Uses DAP `evaluate` request to call `Input.ActionPress/Release` in the game process.
+        *   `action` (optional string): Name of action (e.g., "jump").
+        *   `event_type` (optional string): "key", "mouse_button", "joy_button", "joy_axis".
+        *   `data` (optional object):
+            *   For "key": `{ "keycode": "Space", "pressed": true }`
+            *   For "joy_button": `{ "index": 0, "pressed": true }`
+            *   For "mouse_button": `{ "button_index": 1, "pressed": true, "position": "100,100" }`
+    *   *Implementation*: Uses DAP `evaluate` request to call `Input.ParseInputEvent`.
 
 ## 5. Implementation Requirements
 
