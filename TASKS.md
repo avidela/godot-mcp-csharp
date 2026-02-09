@@ -20,6 +20,7 @@
     - [ ] Map `EditorInterface.GetEditedSceneRoot()` to a JSON DTO.
 - [ ] **Server**: Implement MCP Tools `godot_get_scene_tree`.
 - [ ] **Server**: Implement MCP Tools `godot_get_status`.
+- [ ] **Server**: Implement MCP Tools `godot_list_files` (res://).
 
 ## Phase 3: Control Capabilities
 - [ ] **Plugin**: Implement `PlayHandler`.
@@ -36,8 +37,10 @@
 ## Phase 5: Edit Capabilities
 - [ ] **Plugin**: Implement `NodeManipulator`.
     - [ ] `AddNode(parent, type, name)`.
-    - [ ] `SetProperty(node, prop, value)`.
+    - [ ] `SetProperty(node, prop, value)` (Handle `res://` strings!).
+    - [ ] `CallMethod(node, method, args)` (Handle TileMaps/AnimationPlayers).
 - [ ] **Server**: Implement MCP Tools `godot_add_node` and `godot_set_property`.
+- [ ] **Server**: Implement MCP Tool `godot_call_node_method`.
 
 ## Phase 6: Polish
 - [ ] Add `godot_build` tool.

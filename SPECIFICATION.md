@@ -95,6 +95,13 @@ The MCP Server must expose the following tools to the AI. Generic file system to
         *   `path`: Node path.
         *   `property`: Property name.
         *   `value`: Value (JSON).
+    *   *Special Handling*: If `value` is a string starting with `res://`, the plugin MUST attempt to `GD.Load<Resource>()` it.
+*   **`godot_call_node_method`**
+    *   *Description*: Calls a method on a node. Essential for TileMaps (`set_cell`), AnimationPlayers (`play`), etc.
+    *   *Params*:
+        *   `path`: Node path.
+        *   `method`: Method name (e.g., "set_cell").
+        *   `args`: Array of arguments.
 
 ### D. Debugging (DAP Channel)
 *   **`godot_debug_break`**: Pause execution.
@@ -110,6 +117,7 @@ The MCP Server must expose the following tools to the AI. Generic file system to
 *   On `_EnterTree`, start a WebSocket listener on port 6009.
 *   **Thread Safety**: Incoming WS messages arrive on a background thread. You MUST use `CallDeferred` or `SynchronizationContext` to touch Godot Nodes.
 *   **Response Format**: All WS responses must be JSON-RPC 2.0.
+*   **Resource Loading**: When setting properties or calling methods, check string arguments. If they match `res://*`, load the resource.
 
 ### 5.2 GodotMcp.Server
 *   **MCP Library**: Use `ModelContextProtocol.NET` (or equivalent).
