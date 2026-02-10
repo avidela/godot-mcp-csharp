@@ -12,6 +12,11 @@ obj/
 *.user
 *.suo
 
+# Plugin artifacts
+addons/godot_mcp_csharp/*.dll
+addons/godot_mcp_csharp/*.pdb
+addons/godot_mcp_csharp/*.cs
+
 # OS
 .DS_Store
 Thumbs.db
