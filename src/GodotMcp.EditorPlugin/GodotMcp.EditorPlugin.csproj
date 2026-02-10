@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GodotSharp" Version="4.3.0" />
+    <PackageReference Include="GodotSharpEditor" Version="4.3.0" />
+  </ItemGroup>
+
+  <!-- Spec 5.3: Build System - Copy DLL and plugin.cfg -->
+  <Target Name="CopyPlugin" AfterTargets="Build">
+    <ItemGroup>
+      <PluginFiles Include="$(TargetDir)*.dll" />
+      <PluginScript Include="$(ProjectDir)GodotMcpPlugin.cs" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(SolutionDir)addons/godot_mcp_csharp/" />
+    <Copy SourceFiles="@(PluginScript)" DestinationFolder="$(SolutionDir)addons/godot_mcp_csharp/" />
+  </Target>
+
+</Project>
